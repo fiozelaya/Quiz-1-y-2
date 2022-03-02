@@ -19,13 +19,17 @@ enum class TMedia {IMAGEN, VIDEO, AUDIO};
 //definician de clase Media
 class Media{
     private:
+    string creador;
+    string fecha;
     TMedia tipo;
     string URL;
     public:
     Media(){
         
     }
-    Media(TMedia pTipo, string pURL){
+    Media(TMedia pTipo, string pURL, string pCreador, string pFecha){
+        creador = pCreador;
+        fecha = pFecha;
         tipo = pTipo;
         URL = pURL;
     }
@@ -43,7 +47,8 @@ class Media{
             break;
         }
 
-        cout << "Tipo de archivo: " << tipoMedia << "\nLink del archivo: " << URL << endl;
+        cout << "Tipo de archivo: " << tipoMedia << " --- Link del archivo: " << URL;
+        cout << "\nCreador: " << creador << " --- Fecha: " << fecha;
     }
 };
 
@@ -77,7 +82,6 @@ class NoticiaPaper: public Noticia{
         ruta = r;
     }
     virtual void getInfo(){
-        cout << "Imprimiendo informacion de NoticiaPaper..." << endl;
         cout << "Titulo: " << titulo << "\nFecha: " << fecha << "\nReportero: " << reportero << endl;
         cout << "URL de imagen: " << ruta << endl;
     }
@@ -92,10 +96,10 @@ class NoticiaDigital: public Noticia{
         media = media_;
     }
     virtual void getInfo(){
-        cout << "Imprimiendo informacion de NoticiaDigital..." << endl;
         cout << "Titulo: " << titulo << "\nFecha: " << fecha << "\nReportero: " << reportero << "\n\nArchivos media:" << endl;
-        
+        int i = 0;
         for (Media* PtrMedia: media){
+            cout << "(" << ++i << ") ";
             PtrMedia->toString();
             cout << endl;
         }
@@ -115,7 +119,6 @@ class NoticiaRadio: public Noticia{
     }
     //definician del metodo abstracto getInfo
     virtual void getInfo(){
-        cout << "Imprimiendo informacion de NoticiaRadio..." << endl;
         cout << "Titulo: " << titulo << "\nFecha: " << fecha << "\nReportero: " << reportero << endl;
         cout << "URL de audio: " << URL << endl;
     }
@@ -125,10 +128,10 @@ class NoticiaRadio: public Noticia{
 
 int main(){
     //lista de archivos media
-    Media m1(TMedia::VIDEO, "https://www.youtube.com/watch?v=CUUy12SlmFM");
-    Media m2(TMedia::IMAGEN, "https://www.nacion.com/resizer/vxbRNG3LTL5wgw1xYVh7S1aMRnM=/1440x0/filters:format(jpg):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/gruponacion/NVAV4CCGMZFJFOUR5FYAKGFOZU.jpg");
-    Media m3(TMedia::IMAGEN, "https://www.nacion.com/resizer/Hdzt3IXErrdWBvF2soYSJ-TRQ2w=/1440x0/filters:format(jpg):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/gruponacion/AHIWMIGLVZG47FWB7OE6P4SXZ4.jpg");
-    Media m4(TMedia::AUDIO, "https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cucmZpLmZyL2VzL3Byb2dyYW1hcy9ub3RpY2lhcy1hbWVyaWNhL3BvZGNhc3Q");
+    Media m1(TMedia::VIDEO, "https://www.youtube.com/watch?v=CUUy12SlmFM", "Jose Maria Perez", "01/03/2022");
+    Media m2(TMedia::IMAGEN, "https://www.nacion.com/resizer/vxbRNG3LTL5wgw1xYVh7S1aMRnM=/1440x0/filters:format(jpg):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/gruponacion/NVAV4CCGMZFJFOUR5FYAKGFOZU.jpg", "Alejandra Fonseca V.", "01/03/2022");
+    Media m3(TMedia::IMAGEN, "https://www.nacion.com/resizer/Hdzt3IXErrdWBvF2soYSJ-TRQ2w=/1440x0/filters:format(jpg):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/gruponacion/AHIWMIGLVZG47FWB7OE6P4SXZ4.jpg", "Alejandra Fonseca V.", "01/03/2022");
+    Media m4(TMedia::AUDIO, "https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cucmZpLmZyL2VzL3Byb2dyYW1hcy9ub3RpY2lhcy1hbWVyaWNhL3BvZGNhc3Q", "Erick Morales F.", "01/03/2022");
     vector<Media*> media = {&m1, &m2, &m3, &m4};
 
     //instanciacian de noticias y creacian de lista de noticias
